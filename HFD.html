@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>父親節快樂！</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f4f8; /* 淺灰色背景 */
+      }
+      /* 卡片容器樣式 */
+      .card-container {
+        width: 90%;
+        max-width: 400px;
+        height: 550px;
+        perspective: 1000px; /* 3D 視角 */
+        position: relative;
+      }
+      /* 卡片樣式 */
+      .card {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.8s; /* 翻轉動畫 */
+        cursor: pointer;
+      }
+      /* 卡片翻轉後樣式 */
+      .card.flipped {
+        transform: rotateY(180deg);
+      }
+      /* 卡片正面與背面樣式 */
+      .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden; /* 翻轉時隱藏背面 */
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* padding: 2rem; */
+        text-align: center;
+      }
+      /* 卡片正面樣式 */
+      .card-front {
+        background-color: #ffffff;
+        background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        border: 2px solid #e2e8f0;
+      }
+      .card-front > img {
+        /* width: 100%;
+        height: 100%; */
+        object-fit: cover;
+      }
+
+      /* 卡片背面樣式 */
+      .card-back {
+        background-color: #2d3748;
+        color: #850505;
+        transform: rotateY(180deg);
+        background-image: radial-gradient(circle at top left, #f6c053, #e8e4dd);
+        /* 調整 flexbox 讓內容垂直排列 */
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-top: 2rem;
+        padding-bottom: 0; /* 照片將佔據底部 */
+        position: relative;
+      }
+
+      /* 照片容器樣式 */
+      .photo-container {
+        width: 100%;
+        height: 50%; /* 讓照片佔據底部 40% 的空間 */
+        position: relative;
+        /* 使用漸層遮罩來實現淡出效果 */
+        mask-image: linear-gradient(to top, black 50%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+          to top,
+          black 50%,
+          transparent 100%
+        );
+      }
+
+      .photo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 確保照片填滿容器 */
+        border-bottom-left-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+      }
+
+      /* 動畫效果 */
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(-100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+      .confetti-piece {
+        position: absolute;
+        background-color: #ff99c8;
+        opacity: 0;
+        animation: confetti-fall 5s linear forwards;
+        animation-delay: var(--delay);
+        z-index: 10;
+      }
+      .confetti-piece.pink {
+        background-color: #ff99c8;
+      }
+      .confetti-piece.blue {
+        background-color: #a0c4ff;
+      }
+      .confetti-piece.yellow {
+        background-color: #fcf6bd;
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center min-h-screen p-4">
+    <!-- 主卡片容器 -->
+    <div class="card-container">
+      <div id="card" class="card">
+        <!-- 卡片正面 -->
+        <div class="card-face card-front">
+          <!-- 請將此處的 src 換成您自己的照片網址 -->
+          <img
+            src="2.png"
+            alt="父親節快樂插圖"
+            class="mb-6 w-40 h-40 rounded-full shadow-lg object-cover" 
+          />
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">
+            Happy <br />Farther's Day
+          </h1>
+          <p class="text-sm text-gray-600" style="line-height: 5rem;">請點擊卡片翻轉</p>
+        </div>
+        <!-- 卡片背面 -->
+        <div class="card-face card-back">
+          <div
+            class="text-left w-full px-6 flex flex-col justify-center items-center h-3/5"
+          >
+            <h2 class="text-3xl font-bold text-white mb-4 tracking-wide">
+              父親節快樂！
+            </h2>
+            <p class="text-lg text-gray-200 leading-relaxed mb-6">
+              阿爸子：<br>
+              　　感謝你一直以來的支持與照顧，不斷的努力，要讓這個家越來越好～～
+              我的事情你可以不用太擔心喔～～畢竟我可是自己就在花蓮把大學跟碩士讀完的呢！
+              現在只要龜鹿二蕨能大發財就夠了！
+              <br>祝你　　
+              <br class="text-center">父親節快樂！
+            </p>
+            <p class="text-lg text-gray-200 mt-auto text-right">兒～子～</p>
+          </div>
+          <!-- 新增的照片容器 -->
+          <div class="photo-container h-1/2">
+            <img src="/1.jpg" alt="父親節照片" onerror="this.src='/1.jpg'" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const card = document.getElementById("card");
+      const confettiCount = 50;
+      const colors = ["pink", "blue", "yellow"];
+
+      card.addEventListener("click", function () {
+        card.classList.toggle("flipped");
+        if (card.classList.contains("flipped")) {
+          // 卡片翻轉後撒下紙屑
+          createConfetti();
+        }
+      });
+
+      function createConfetti() {
+        const cardContainer = document.querySelector(".card-container");
+        for (let i = 0; i < confettiCount; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add(
+            "confetti-piece",
+            colors[Math.floor(Math.random() * colors.length)]
+          );
+          const size = Math.random() * 12 + 8; // 8px 到 20px
+          confetti.style.width = `${size}px`;
+          confetti.style.height = `${size}px`;
+          confetti.style.left = `${Math.random() * 100}%`;
+          confetti.style.animationDelay = `${Math.random() * 5}s`;
+          cardContainer.appendChild(confetti);
+        }
+      }
+    </script>
+  </body>
+</html>
